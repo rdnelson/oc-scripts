@@ -50,7 +50,7 @@ function print_energy_dev(gpu, dev_name, y)
     progress_bar(gpu, 1, y+1, width, 0x00FF00, dev.getEnergyStored(), dev.getMaxEnergyStored())
 end
 
-local gpu = component.proxy(dev_by_type("gpu"))
+local gpu = component.proxy(dev_by_type("gpu")[1])
 
 print("Found " .. #dev_by_type("energy_device") .. " energy banks")
 for k, v in pairs(dev_by_type("energy_device")) do
