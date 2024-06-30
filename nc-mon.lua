@@ -33,7 +33,8 @@ function progress_bar(gpu, x, y, current, max)
 
 end
 
+print("Found " .. #dev_by_type("energy_device") .. " energy banks")
 for k, v in pairs(dev_by_type("energy_device")) do
-    print(device_names[v])
     print(v)
+    print(device_names[v])
 end
