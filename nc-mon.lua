@@ -30,6 +30,7 @@ function get_display_screen_id()
 end
 
 function progress_bar(gpu, x, y, width, colour, current, max)
+    local oldForeground = gpu.getForeground()
     local oldBackground = gpu.getBackground()
     gpu.setForeground(colour)
     gpu.set(x, y, "[")
@@ -41,6 +42,7 @@ function progress_bar(gpu, x, y, width, colour, current, max)
     gpu.setBackground(oldBackground)
     gpu.fill(x + 1 + filled, y, blocks - filled, 1, "-")
     gpu.set(x+width-1, y, "]")
+    gpu.setForeground(oldForeground)
 end
 
 function print_energy_dev(gpu, dev_name, y)
