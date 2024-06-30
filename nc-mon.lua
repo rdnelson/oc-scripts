@@ -39,7 +39,7 @@ function progress_bar(gpu, x, y, width, colour, current, max)
     local filled = math.floor((blocks * portion) + 0.5)
     gpu.fill(x+1, y, filled, 1, " ")
     gpu.setBackground(oldBackground)
-    gpu.fill(x + 1 + filled, y, blocks - filled, "-")
+    gpu.fill(x + 1 + filled, y, blocks - filled, 1, "-")
     gpu.set(x+width-1, y, "]")
 end
 
