@@ -29,12 +29,30 @@ function get_display_screen_id()
     return nil
 end
 
-function progress_bar(gpu, x, y, current, max)
-
+function progress_bar(gpu, x, y, width, colour, current, max)
+    local oldBackground = gpu.getBackground()
+    gpu.setForeground(colour)
+    gpu.set(x, y, "[")
+    gpu.setBackground(colour)
+    local portion = current / max
+    local blocks = width - 2
+    local filled = math.floor((blocks * portion) + 0.5)
+    gpu.fill(x+1, y, filled, 1, " ")
+    gpu.setBackground(oldBackground)
+    gpu.fill(x + 1 + filled, y, blocks - filled, "-")
+    gpu.set(x+width-1, y, "]")
 end
+
+function print_energy_dev(gpu, dev_name, y)
+    local dev = component.proxy(dev_name)
+    local width, height = gpu.getResolution()
+    gpu.set(1, y, device_names[dev_name])
+    progress_bar(gpu, 1, y+1, width, 0x00FF00, dev.getEnergyStored(), dev.getMaxEnergyStored())
+end
+
+local gpu = component.proxy(dev_by_type("gpu"))
 
 print("Found " .. #dev_by_type("energy_device") .. " energy banks")
 for k, v in pairs(dev_by_type("energy_device")) do
-    print(v)
-    print(device_names[v])
+    print_energy_dev(gpu, v, ((k - 1) * 3) + 1)
 end
